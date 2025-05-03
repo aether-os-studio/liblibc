@@ -1768,10 +1768,11 @@ cfg_if! {
         mod newlib;
         pub use self::newlib::*;
     } else if #[cfg(any(
+        target_os = "aether",
         target_os = "linux",
         target_os = "l4re",
         target_os = "android",
-        target_os = "emscripten"
+        target_os = "emscripten",
     ))] {
         mod linux_like;
         pub use self::linux_like::*;

@@ -69,7 +69,7 @@ s! {
         pub ai_protocol: c_int,
         pub ai_addrlen: socklen_t,
 
-        #[cfg(any(target_os = "linux", target_os = "emscripten"))]
+        #[cfg(any(target_os = "linux", target_os = "aether", target_os = "emscripten"))]
         pub ai_addr: *mut crate::sockaddr,
 
         pub ai_canonname: *mut c_char,
@@ -1634,6 +1634,7 @@ cfg_if! {
 cfg_if! {
     if #[cfg(any(
         target_os = "linux",
+        target_os = "aether",
         target_os = "android",
         target_os = "l4re"
     ))] {
@@ -2091,6 +2092,9 @@ cfg_if! {
         mod emscripten;
         pub use self::emscripten::*;
     } else if #[cfg(target_os = "linux")] {
+        mod linux;
+        pub use self::linux::*;
+    } else if #[cfg(target_os = "aether")] {
         mod linux;
         pub use self::linux::*;
     } else if #[cfg(target_os = "l4re")] {
